@@ -21,7 +21,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<SplitPane dividerPositions="0.29797979797979796" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="701.0" prefWidth="958.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<SplitPane dividerPositions="0.25" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="701.0" prefWidth="958.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
   <items>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
          <children>
@@ -38,8 +38,8 @@
             <ButtonBar layoutY="659.0" prefHeight="40.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
               <buttons>
                   <Button mnemonicParsing="false" text="Add" ButtonBar.buttonData="LEFT" />
-                  <Button mnemonicParsing="false" text="Cancel" />
                 <Button mnemonicParsing="false" text="Save" />
+                  <Button mnemonicParsing="false" text="Cancel" />
               </buttons>
             </ButtonBar>
             <TabPane prefHeight="654.0" prefWidth="667.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -48,37 +48,46 @@
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <VBox prefHeight="635.0" prefWidth="667.0">
+                              <VBox prefHeight="635.0" prefWidth="713.0">
                                  <children>
-                                    <Label text="Details">
-                                       <font>
-                                          <Font name="System Bold" size="24.0" />
-                                       </font>
-                                       <VBox.margin>
-                                          <Insets left="20.0" top="20.0" />
-                                       </VBox.margin>
-                                    </Label>
-                                    <GridPane VBox.vgrow="NEVER">
+                                    <GridPane prefHeight="72.0" prefWidth="627.0" VBox.vgrow="NEVER">
                                        <columnConstraints>
-                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="328.0" minWidth="10.0" prefWidth="122.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="592.0" minWidth="10.0" prefWidth="173.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="328.0" minWidth="10.0" prefWidth="153.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="592.0" minWidth="10.0" prefWidth="144.0" />
                                           <ColumnConstraints hgrow="SOMETIMES" maxWidth="592.0" minWidth="10.0" prefWidth="395.0" />
                                        </columnConstraints>
                                        <rowConstraints>
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
                                        </rowConstraints>
                                        <VBox.margin>
-                                          <Insets left="20.0" right="20.0" top="20.0" />
+                                          <Insets left="20.0" right="20.0" top="30.0" />
                                        </VBox.margin>
                                        <children>
-                                          <Label text="Word in" />
-                                          <TextField prefHeight="26.0" prefWidth="353.0" styleClass="back" GridPane.columnIndex="2" />
-                                          <Label text="Translation in" GridPane.rowIndex="1" />
-                                          <ChoiceBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                          <TextField GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                                          <ChoiceBox prefWidth="150.0" GridPane.columnIndex="1" />
+                                          <Label text="Word in">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font></Label>
+                                          <TextField prefHeight="26.0" prefWidth="353.0" styleClass="back" GridPane.columnIndex="2">
+                                             <GridPane.margin>
+                                                <Insets left="5.0" />
+                                             </GridPane.margin></TextField>
+                                          <Label prefHeight="25.0" prefWidth="164.0" text="Translation in" GridPane.rowIndex="1">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font></Label>
+                                          <ChoiceBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                             <GridPane.margin>
+                                                <Insets right="5.0" />
+                                             </GridPane.margin></ChoiceBox>
+                                          <TextField GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                             <GridPane.margin>
+                                                <Insets left="5.0" />
+                                             </GridPane.margin></TextField>
+                                          <ChoiceBox prefWidth="150.0" GridPane.columnIndex="1">
+                                             <GridPane.margin>
+                                                <Insets right="5.0" />
+                                             </GridPane.margin></ChoiceBox>
                                        </children>
                                        <opaqueInsets>
                                           <Insets />
@@ -94,19 +103,20 @@
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <VBox prefHeight="200.0" prefWidth="100.0">
+                              <VBox prefHeight="201.0" prefWidth="654.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
-                                    <Label text="Examples">
-                                       <font>
-                                          <Font name="System Bold" size="18.0" />
-                                       </font>
-                                    </Label>
-                                    <ListView prefHeight="115.0" prefWidth="627.0" />
+                                    <ListView prefHeight="455.0" prefWidth="627.0" VBox.vgrow="ALWAYS">
+                                       <VBox.margin>
+                                          <Insets left="20.0" right="20.0" top="10.0" />
+                                       </VBox.margin></ListView>
                                     <ButtonBar prefHeight="40.0" prefWidth="200.0">
                                        <buttons>
                                           <Button mnemonicParsing="false" text="Add" />
                                           <Button mnemonicParsing="false" text="Delete" />
                                        </buttons>
+                                       <VBox.margin>
+                                          <Insets left="20.0" right="20.0" top="10.0" />
+                                       </VBox.margin>
                                     </ButtonBar>
                                  </children>
                               </VBox>
@@ -120,15 +130,7 @@
                            <children>
                               <VBox prefHeight="626.0" prefWidth="667.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
-                                    <Label text="Properties">
-                                       <font>
-                                          <Font name="System Bold" size="18.0" />
-                                       </font>
-                                       <VBox.margin>
-                                          <Insets left="20.0" top="10.0" />
-                                       </VBox.margin>
-                                    </Label>
-                                    <TableView prefHeight="496.0" prefWidth="627.0">
+                                    <TableView prefHeight="494.0" prefWidth="627.0" VBox.vgrow="ALWAYS">
                                        <columns>
                                           <TableColumn prefWidth="312.0" resizable="false" text="Key" />
                                           <TableColumn prefWidth="354.0" text="Value" />
