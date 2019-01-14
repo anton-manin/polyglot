@@ -13,5 +13,9 @@
 
     <groupId>org.projects.polyglot</groupId>
     <artifactId>poly-javafx</artifactId>
-
+    
+    <properties>
+        <junit.version>5.3.2</junit.version>
+    </properties>
+	
 </project>
