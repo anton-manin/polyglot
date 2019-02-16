@@ -4,7 +4,7 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import javafx.application.Application;
 import javafx.stage.Stage;
-import org.projects.polyglot.javafx.config.GuiceModule;
+import org.projects.polyglot.javafx.config.JavaFXGuiceModule;
 import org.projects.polyglot.javafx.controller.StageController;
 
 public class Main extends Application {
@@ -15,7 +15,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Injector injector = Guice.createInjector(new GuiceModule());
+        Injector injector = Guice.createInjector(new JavaFXGuiceModule());
 
         StageController stageController = injector.getInstance(StageController.class);
 
