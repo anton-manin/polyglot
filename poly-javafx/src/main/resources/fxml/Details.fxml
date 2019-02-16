@@ -12,8 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -34,7 +33,7 @@
                         <Font size="20.0" />
                      </font>
                   </Label>
-                  <TextField prefHeight="26.0" prefWidth="353.0" styleClass="back" GridPane.columnIndex="1">
+                  <TextField fx:id="wordTextField" prefHeight="26.0" prefWidth="353.0" styleClass="back" GridPane.columnIndex="1">
                      <GridPane.margin>
                         <Insets left="5.0" />
                      </GridPane.margin>
@@ -44,10 +43,11 @@
                   <Insets />
                </opaqueInsets>
             </GridPane>
-            <TableView>
+            <TableView fx:id="translationTableView">
                <columns>
-                  <TableColumn prefWidth="283.0" text="Language" />
-                  <TableColumn prefWidth="276.0" text="Translation" />
+                  <TableColumn fx:id="languageTableColumn" prefWidth="280.0" text="Language" />
+                  <TableColumn fx:id="translationTableColumn" prefWidth="276.0" text="Translation" />
+                  <TableColumn fx:id="actionTableColumn" prefWidth="70.0" text="Action" />
                </columns>
                <VBox.margin>
                   <Insets bottom="10.0" left="20.0" right="20.0" top="20.0" />

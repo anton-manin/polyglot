@@ -12,21 +12,20 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="702.0" prefWidth="959.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <SplitPane dividerPositions="0.25" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="701.0" prefWidth="958.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <items>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
-                  <ListView layoutX="-13.0" layoutY="40.0" prefHeight="659.0" prefWidth="281.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="45.0" />
-                  <TextField layoutX="14.0" layoutY="14.0" prefHeight="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="0.0" />
-                  <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="239.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <ListView fx:id="searchListView" layoutX="-13.0" layoutY="40.0" prefHeight="659.0" prefWidth="281.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="45.0" />
+                  <TextField fx:id="searchTextField" layoutX="14.0" layoutY="14.0" prefHeight="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="0.0" />
+                  <ImageView fx:id="searchImageView" fitHeight="40.0" fitWidth="40.0" layoutX="239.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <image>
                         <Image url="@search.png" />
                      </image>
                   </ImageView>
-                  <ChoiceBox layoutX="43.0" layoutY="672.0" prefWidth="150.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" />
+                  <ChoiceBox fx:id="languageChoiceBox" layoutX="43.0" layoutY="672.0" prefWidth="150.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" />
                </children>
             </AnchorPane>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
@@ -34,23 +33,23 @@
                   <ButtonBar layoutY="659.0" prefHeight="40.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
                      <buttons>
                         <Button mnemonicParsing="false" text="Add new Word" ButtonBar.buttonData="LEFT" />
-                        <Button mnemonicParsing="false" text="Save" />
-                        <Button mnemonicParsing="false" text="Cancel" />
+                        <Button fx:id="saveButton" mnemonicParsing="false" text="Save" />
+                        <Button fx:id="deleteButton" mnemonicParsing="false" text="Delete" />
                      </buttons>
                   </ButtonBar>
-                  <TabPane prefHeight="654.0" prefWidth="667.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <TabPane fx:id="tabsPane" prefHeight="654.0" prefWidth="667.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <tabs>
-                        <Tab text="Details">
+                        <Tab fx:id="detailsTab" text="Details">
                            <content>
                               <fx:include source="Details.fxml" />
                            </content>
                         </Tab>
-                        <Tab text="Examples">
+                        <Tab fx:id="examplesTab" text="Examples">
                            <content>
                               <fx:include source="Examples.fxml" />
                            </content>
                         </Tab>
-                        <Tab text="Properties">
+                        <Tab fx:id="propertiesTab" text="Properties">
                            <content>
                               <fx:include source="Properties.fxml" />
                            </content>
