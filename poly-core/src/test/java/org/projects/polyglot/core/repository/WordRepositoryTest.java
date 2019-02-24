@@ -7,6 +7,8 @@ import org.projects.polyglot.core.domain.Languages;
 import org.projects.polyglot.core.domain.Property;
 import org.projects.polyglot.core.domain.Word;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -26,6 +28,14 @@ public class WordRepositoryTest {
 
     @Autowired
     WordRepository wordRepository;
+
+    @SpringBootApplication
+    @EntityScan(basePackages = "org.projects.polyglot.core.domain")
+    static class TestConfiguration {
+    }
+
+
+
 
     @Test
     public void noWords() {
