@@ -27,6 +27,10 @@ public class Word {
     @Column(nullable = false)
     private Languages language;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private WordType wordType;
+
     @ManyToMany
     @JoinTable(
         name = "TRANSLATION",

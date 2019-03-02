@@ -2,10 +2,7 @@ package org.projects.polyglot.core.repository;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.projects.polyglot.core.domain.Example;
-import org.projects.polyglot.core.domain.Languages;
-import org.projects.polyglot.core.domain.Property;
-import org.projects.polyglot.core.domain.Word;
+import org.projects.polyglot.core.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -53,6 +50,7 @@ public class WordRepositoryTest {
 
         Word word = Word.builder()
                 .language(language)
+                .wordType(WordType.NOUN)
                 .priority(priority)
                 .word(wordText)
                 .build();
@@ -77,6 +75,7 @@ public class WordRepositoryTest {
         Word word = Word.builder()
                 .word(wordTextEnglish)
                 .language(languageEnglish)
+                .wordType(WordType.NOUN)
                 .build();
 
         Languages languageGerman = Languages.GERMAN;
@@ -84,6 +83,7 @@ public class WordRepositoryTest {
         Word translationGerman = Word.builder()
                 .word(wordTextGerman)
                 .language(languageGerman)
+                .wordType(WordType.NOUN)
                 .build();
         wordRepository.save(translationGerman);
 
@@ -92,6 +92,7 @@ public class WordRepositoryTest {
         Word translationRussian = Word.builder()
                 .word(wordTextRussian)
                 .language(languageRussian)
+                .wordType(WordType.NOUN)
                 .build();
         wordRepository.save(translationRussian);
 
@@ -114,7 +115,7 @@ public class WordRepositoryTest {
 
     @Test
     public void saveNewWordWithExamples() {
-        Word word = Word.builder().word("").language(Languages.ENGLISH).build();
+        Word word = Word.builder().word("").language(Languages.ENGLISH).wordType(WordType.NOUN).build();
 
         Example example1 = new Example();
         example1.setExample("Example 1");
@@ -135,7 +136,7 @@ public class WordRepositoryTest {
 
     @Test
     public void saveNewWordWithProperties() {
-        Word word = Word.builder().word("").language(Languages.ENGLISH).build();
+        Word word = Word.builder().word("").language(Languages.ENGLISH).wordType(WordType.NOUN).build();
 
         Property property1 = new Property();
         property1.setKey("Key1");
