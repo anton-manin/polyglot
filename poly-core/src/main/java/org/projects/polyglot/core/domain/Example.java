@@ -12,11 +12,12 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "examples")
 public class Example {
 
     @Id
-    @GeneratedValue(generator="example_seq")
-    @SequenceGenerator(name="example_seq",sequenceName="EXAMPLE_SEQ", allocationSize=1)
+    @GeneratedValue(generator="examples_seq")
+    @SequenceGenerator(name="examples_seq",sequenceName="EXAMPLES_SEQ", allocationSize=1)
     private Integer id;
 
     @Column(nullable = false)

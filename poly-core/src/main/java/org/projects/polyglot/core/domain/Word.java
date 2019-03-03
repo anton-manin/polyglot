@@ -11,11 +11,12 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "words")
 public class Word {
 
     @Id
-    @GeneratedValue(generator="word_seq")
-    @SequenceGenerator(name="word_seq",sequenceName="WORD_SEQ", allocationSize=1)
+    @GeneratedValue(generator="words_seq")
+    @SequenceGenerator(name="words_seq",sequenceName="WORDS_SEQ", allocationSize=1)
     private Integer id;
 
     @Column(nullable = false)
@@ -33,7 +34,7 @@ public class Word {
 
     @ManyToMany
     @JoinTable(
-        name = "TRANSLATION",
+        name = "TRANSLATIONS",
         joinColumns = @JoinColumn(name = "TRANSLATION_ID", referencedColumnName = "ID"),
         inverseJoinColumns = @JoinColumn(name = "WORD_ID", referencedColumnName = "ID")
     )
