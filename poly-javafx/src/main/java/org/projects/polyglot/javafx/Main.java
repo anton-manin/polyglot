@@ -1,25 +1,29 @@
 package org.projects.polyglot.javafx;
 
-import com.google.inject.Guice;
-import com.google.inject.Injector;
 import javafx.application.Application;
 import javafx.stage.Stage;
-import org.projects.polyglot.javafx.config.JavaFXGuiceModule;
 import org.projects.polyglot.javafx.controller.StageController;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
 
+@SpringBootApplication
 public class Main extends Application {
 
-    public static void main(String[] args) {
-        launch();
+    private ConfigurableApplicationContext springContext;
+
+    @Override
+    public void init() throws Exception {
+        springContext = SpringApplication.run(Main.class);
     }
 
     @Override
     public void start(Stage stage) throws Exception {
-        Injector injector = Guice.createInjector(new JavaFXGuiceModule());
+        StageController.initFxmlLoader(springContext, stage);
+        StageController.showMainWindow();
+    }
 
-        StageController stageController = injector.getInstance(StageController.class);
-
-        stageController.setPrimaryStage(stage);
-        stageController.showMainWindow();
+    public static void main(String[] args) {
+        launch();
     }
 }

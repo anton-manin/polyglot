@@ -4,7 +4,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import org.springframework.stereotype.Component;
 
+@Component
 public class MainWindowController {
 
     @FXML
