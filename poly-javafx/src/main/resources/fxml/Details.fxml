@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -23,6 +24,7 @@
                </columnConstraints>
                <rowConstraints>
                   <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <VBox.margin>
                   <Insets left="20.0" right="20.0" top="30.0" />
@@ -33,11 +35,17 @@
                         <Font size="20.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="wordTextField" prefHeight="26.0" prefWidth="353.0" styleClass="back" GridPane.columnIndex="1">
+                  <TextField fx:id="wordTextField" prefHeight="26.0" prefWidth="442.0" styleClass="back" GridPane.columnIndex="1">
                      <GridPane.margin>
-                        <Insets left="5.0" />
+                        <Insets />
                      </GridPane.margin>
                   </TextField>
+                  <Label text="Word Type" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <ChoiceBox fx:id="wordTypeChocieBox" prefHeight="26.0" prefWidth="458.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                </children>
                <opaqueInsets>
                   <Insets />
