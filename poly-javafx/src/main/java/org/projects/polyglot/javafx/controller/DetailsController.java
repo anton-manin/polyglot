@@ -8,6 +8,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import org.projects.polyglot.core.service.LanguageService;
+import org.projects.polyglot.core.service.WordTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -32,16 +33,28 @@ public class DetailsController {
     @FXML
     private ChoiceBox<String> languageChoiceBox;
 
+    @FXML
+    private ChoiceBox<String> wordTypeChoiceBox;
+
     @Autowired
     LanguageService languageService;
 
     private final ObservableList<String> languages = FXCollections.observableArrayList();
+
+    @Autowired
+    WordTypeService wordTypeService;
+
+    private final ObservableList<String> wordTypes = FXCollections.observableArrayList();
+
 
     @FXML
     public void initialize() {
         // Load languages in languageChoiceBox
         languages.setAll(languageService.getAllLanguages());
         languageChoiceBox.setItems(languages);
+
+        wordTypes.setAll(wordTypeService.getAllWordTypes());
+        wordTypeChoiceBox.setItems(wordTypes);
     }
 
 }
