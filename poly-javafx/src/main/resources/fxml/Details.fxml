@@ -25,6 +25,7 @@
                <rowConstraints>
                   <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
                   <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <VBox.margin>
                   <Insets left="20.0" right="20.0" top="30.0" />
@@ -40,12 +41,18 @@
                         <Insets />
                      </GridPane.margin>
                   </TextField>
-                  <Label text="Word Type" GridPane.rowIndex="1">
+                  <Label text="Word Type" GridPane.rowIndex="2">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </Label>
-                  <ChoiceBox fx:id="wordTypeChocieBox" prefHeight="26.0" prefWidth="458.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <ChoiceBox fx:id="wordTypeChocieBox" prefHeight="26.0" prefWidth="458.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Label text="Language" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <ChoiceBox fx:id="languageChoiceBox" prefHeight="26.0" prefWidth="441.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                </children>
                <opaqueInsets>
                   <Insets />

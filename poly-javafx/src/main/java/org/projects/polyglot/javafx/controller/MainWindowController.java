@@ -19,9 +19,6 @@ public class MainWindowController {
     private ImageView searchImageView;
 
     @FXML
-    private ChoiceBox<?> languageChoiceBox;
-
-    @FXML
     private Button saveButton;
 
     @FXML
@@ -65,7 +62,6 @@ public class MainWindowController {
 
         AnchorPane propertiesContent = (AnchorPane) propertiesTab.getContent();
         propertiesContent.prefWidthProperty().bind(rightPane.widthProperty());
-
     }
 }
 
