@@ -5,10 +5,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
@@ -38,7 +35,7 @@ public class DetailsController {
     private TableColumn<Word, String> translationTableColumn;
 
     @FXML
-    private TableColumn<?, ?> actionTableColumn;
+    private TableColumn<String, String> actionTableColumn;
 
     @FXML
     private ChoiceBox<String> languageChoiceBox;
@@ -101,6 +98,25 @@ public class DetailsController {
             selectedTranslation.setWord(t.getNewValue());
 
             t.getTableView().refresh();
+        });
+
+        actionTableColumn.setCellFactory(param -> new TableCell<String,String>() {
+            final Button btn = new Button("Delete");
+
+            @Override
+            public void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                    setText(null);
+                } else {
+                    btn.setOnAction(event -> {
+                        System.out.println("========== Button clicked");
+                    });
+                    setGraphic(btn);
+                    setText(null);
+                }
+            }
         });
 
         languageTableColumn.setEditable(true);
