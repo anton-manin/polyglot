@@ -1,6 +1,7 @@
 package org.projects.polyglot.javafx.controller;
 
 import javafx.beans.property.ReadOnlyStringWrapper;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,12 +13,14 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.Callback;
 import org.projects.polyglot.core.domain.Languages;
 import org.projects.polyglot.core.domain.Word;
+import org.projects.polyglot.core.domain.WordType;
+import org.projects.polyglot.core.errorhandling.UniqueWordException;
+import org.projects.polyglot.core.repository.WordRepository;
 import org.projects.polyglot.core.service.LanguageService;
+import org.projects.polyglot.core.service.WordService;
 import org.projects.polyglot.core.service.WordTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.Arrays;
 
 @Component
 public class DetailsController {
@@ -55,6 +58,18 @@ public class DetailsController {
 
     private final ObservableList<Word> translations = FXCollections.observableArrayList();
 
+    @Autowired
+    WordService wordService;
+
+    Word currentWord;
+
+    SimpleStringProperty wordTextProperty;
+    SimpleStringProperty wordTypeProperty;
+    SimpleStringProperty languageProperty;
+
+    // For test
+    @Autowired
+    WordRepository wordRepository;
 
     @FXML
     public void initialize() {
@@ -125,19 +140,54 @@ public class DetailsController {
         translationTableView.setItems(translations);
     }
 
+    @FXML
+    public void saveButtonOnAction() {
+        try {
+            wordService.save(currentWord);
+        } catch (UniqueWordException e) {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "The word you trying to save already exists!", ButtonType.OK);
+            alert.show();
+        } catch (Exception e) {
+            // here should be logging
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Word could not be saved, check your log files", ButtonType.OK);
+            alert.show();
+        }
+    }
+
+    @FXML
+    public void deleteButtonOnAction() {
+
+    }
+
     private void addDummyTestDataToWordsList() {
-        Word word = new Word();
-        word.setWord("do");
-        word.setLanguage(Languages.ENGLISH);
+        wordRepository.deleteAll();
+
+        currentWord = new Word();
+        currentWord.setWord("do");
+        currentWord.setLanguage(Languages.ENGLISH);
+        currentWord.setWordType(WordType.VERB);
 
         Word translation = new Word();
         translation.setWord("machen");
         translation.setLanguage(Languages.GERMAN);
 
-        word.setTranslations(Arrays.asList(translation));
+        //currentWord.setTranslations(Arrays.asList(translation));
 
-        wordTextField.setText(word.getWord());
-        languageChoiceBox.setValue(word.getLanguage().toString());
+        wordTextProperty = new SimpleStringProperty(currentWord.getWord());
+        wordTextProperty.addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) ->
+                currentWord.setWord(newValue));
+        wordTextField.textProperty().bindBidirectional(wordTextProperty);
+
+        wordTypeProperty = new SimpleStringProperty(currentWord.getWordType().toString());
+        wordTypeProperty.addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) ->
+                currentWord.setWordType(WordType.valueOf(newValue)));
+        wordTypeChoiceBox.valueProperty().bindBidirectional(wordTypeProperty);
+
+        languageProperty = new SimpleStringProperty(currentWord.getLanguage().toString());
+        languageProperty.addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) ->
+            currentWord.setLanguage(Languages.valueOf(newValue)));
+        languageChoiceBox.valueProperty().bindBidirectional(languageProperty);
+
         translations.add(translation);
     }
 

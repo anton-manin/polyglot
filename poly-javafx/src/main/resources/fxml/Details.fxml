@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
@@ -13,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.projects.polyglot.javafx.controller.DetailsController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.projects.polyglot.javafx.controller.DetailsController">
    <children>
       <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -58,14 +60,23 @@
                   <Insets />
                </opaqueInsets>
             </GridPane>
-            <TableView fx:id="translationTableView">
+            <ButtonBar prefHeight="40.0" prefWidth="200.0">
+              <buttons>
+                <Button fx:id="saveButton" mnemonicParsing="false" onAction="#saveButtonOnAction" text="Save" />
+                  <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#deleteButtonOnAction" text="Delete" />
+              </buttons>
+               <VBox.margin>
+                  <Insets left="20.0" right="20.0" />
+               </VBox.margin>
+            </ButtonBar>
+            <TableView fx:id="translationTableView" prefWidth="628.0">
                <columns>
                   <TableColumn fx:id="languageTableColumn" prefWidth="280.0" text="Language" />
                   <TableColumn fx:id="translationTableColumn" prefWidth="276.0" text="Translation" />
                   <TableColumn fx:id="actionTableColumn" prefWidth="70.0" text="Action" />
                </columns>
                <VBox.margin>
-                  <Insets bottom="10.0" left="20.0" right="20.0" top="20.0" />
+                  <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
                </VBox.margin>
             </TableView>
          </children>
