@@ -11,7 +11,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="702.0" prefWidth="959.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.projects.polyglot.javafx.controller.MainWindowController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="702.0" prefWidth="959.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.projects.polyglot.javafx.controller.MainWindowController">
    <children>
       <SplitPane fx:id="splitPane" dividerPositions="0.25" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="701.0" prefWidth="958.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <items>
@@ -30,9 +30,7 @@
                <children>
                   <ButtonBar layoutY="659.0" prefHeight="40.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
                      <buttons>
-                        <Button mnemonicParsing="false" text="Add new Word" ButtonBar.buttonData="LEFT" />
-                        <Button fx:id="saveButton" mnemonicParsing="false" text="Save" />
-                        <Button fx:id="deleteButton" mnemonicParsing="false" text="Delete" />
+                        <Button fx:id="addButton" mnemonicParsing="false" onAction="#addButtonOnAction" text="Add" />
                      </buttons>
                   </ButtonBar>
                   <TabPane fx:id="tabsPane" prefHeight="654.0" prefWidth="667.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">

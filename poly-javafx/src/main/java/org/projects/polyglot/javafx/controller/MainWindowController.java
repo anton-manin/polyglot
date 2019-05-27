@@ -63,5 +63,10 @@ public class MainWindowController {
         AnchorPane propertiesContent = (AnchorPane) propertiesTab.getContent();
         propertiesContent.prefWidthProperty().bind(rightPane.widthProperty());
     }
+
+    @FXML
+    public void addButtonOnAction() {
+
+    }
 }
 

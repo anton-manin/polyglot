@@ -4,13 +4,14 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import org.projects.polyglot.javafx.controller.StageController;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication(scanBasePackages = {"org.projects.polyglot"})
+@EnableJpaRepositories("org.projects.polyglot.core.repository")
+@EntityScan("org.projects.polyglot.core.domain")
 public class Main extends Application {
 
     private ConfigurableApplicationContext springContext;
