@@ -144,10 +144,12 @@ public class DetailsController {
     public void saveButtonOnAction() {
         try {
             wordService.save(currentWord);
+            System.out.println("===== SAVED");
         } catch (UniqueWordException e) {
             Alert alert = new Alert(Alert.AlertType.WARNING, "The word you trying to save already exists!", ButtonType.OK);
             alert.show();
         } catch (Exception e) {
+            e.printStackTrace();
             // here should be logging
             Alert alert = new Alert(Alert.AlertType.ERROR, "Word could not be saved, check your log files", ButtonType.OK);
             alert.show();
@@ -156,7 +158,8 @@ public class DetailsController {
 
     @FXML
     public void deleteButtonOnAction() {
-
+        wordService.delete(currentWord);
+        System.out.println("===== DELETED");
     }
 
     private void addDummyTestDataToWordsList() {

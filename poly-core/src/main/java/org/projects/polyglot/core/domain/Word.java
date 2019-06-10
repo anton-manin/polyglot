@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Getter
@@ -46,4 +47,20 @@ public class Word {
     @OneToMany(mappedBy = "word", cascade = CascadeType.ALL)
     private List<Property> properties;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Word word1 = (Word) o;
+        return Objects.equals(id, word1.id) &&
+                Objects.equals(word, word1.word) &&
+                Objects.equals(priority, word1.priority) &&
+                language == word1.language &&
+                wordType == word1.wordType;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, word, priority, language, wordType);
+    }
 }

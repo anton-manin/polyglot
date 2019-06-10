@@ -8,6 +8,7 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 
+import static org.projects.polyglot.core.util.Util.emptyIfNull;
 import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers.exact;
 
 @Service
@@ -28,4 +29,13 @@ public class WordService {
         throw new UniqueWordException();
     }
 
+    public void delete(Word word) {
+        for (Word translation : emptyIfNull(word.getTranslations())) {
+            translation.getTranslations().remove(word);
+            wordRepository.saveAndFlush(translation);
+        }
+
+        word.setTranslations(null);
+        wordRepository.delete(word);
+    }
 }
