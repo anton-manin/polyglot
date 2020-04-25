@@ -121,11 +121,6 @@ public class MainWindowController {
     }
 
     @FXML
-    public void addButtonOnAction() {
-        this.wordsDetailsController.loadWord(new Word());
-    }
-
-    @FXML
     public void searchWord(KeyEvent event) {
         if (event.getCode().equals(KeyCode.ENTER)) {
             String wordToSearch = searchTextField.getText();

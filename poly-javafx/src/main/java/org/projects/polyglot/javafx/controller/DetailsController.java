@@ -57,6 +57,12 @@ public class DetailsController {
     @FXML
     private Button deleteButton;
 
+    @FXML
+    private Button cancelButton;
+
+    @FXML
+    private Button addButton;
+
     @Autowired
     LanguageService languageService;
 
@@ -91,8 +97,6 @@ public class DetailsController {
 
         translationTableView.setDisable(true);
         deleteButton.setVisible(false);
-
-        addDummyTestDataToWordsList();
 
         // Load languages in languageChoiceBox
         languages.setAll(languageService.getAllLanguages());
@@ -223,6 +227,8 @@ public class DetailsController {
             translationTableView.setDisable(false);
 
             deleteButton.setVisible(true);
+            cancelButton.setVisible(false);
+            addButton.setVisible(true);
 
             System.out.println("===== SAVED");
         } catch (UniqueWordException e) {
@@ -250,11 +256,30 @@ public class DetailsController {
 
         resetCurrentWord();
         deleteButton.setVisible(false);
+        saveButton.setVisible(false);
+        cancelButton.setVisible(false);
+        addButton.setVisible(true);
 
         examplesTab.setDisable(true);
         propertiesTab.setDisable(true);
 
         System.out.println("===== DELETED");
+    }
+
+    @FXML
+    public void addButtonOnAction() {
+        loadWord(new Word());
+
+        saveButton.setVisible(true);
+        cancelButton.setVisible(true);
+        addButton.setVisible(false);
+    }
+
+    @FXML
+    void cancelButtonOnAction() {
+        saveButton.setVisible(false);
+        cancelButton.setVisible(false);
+        addButton.setVisible(true);
     }
 
     private void resetCurrentWord() {
@@ -282,6 +307,8 @@ public class DetailsController {
         languageChoiceBox.setValue(currentWord.getLanguage().toString());
 
         translations.add(getEmptyWord());
+
+        addButton.setVisible(false);
     }
 
     private Word getEmptyWord() {
