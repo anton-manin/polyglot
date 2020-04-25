@@ -43,8 +43,7 @@ public class PropertiesController {
 
     DetailsController detailsController;
 
-    @FXML
-    public void initialize() {
+    public void init() {
         propertyTableView.setEditable(true);
 
 
@@ -103,7 +102,7 @@ public class PropertiesController {
                     setText(null);
                 } else {
                     saveTranslationButton.setOnAction(event -> {
-                        System.out.println("========== Save Translation Button clicked");
+                        System.out.println("========== Save Property Button clicked");
                         Property property = properties.get(this.getIndex());
 
                         if (property != null &&
@@ -119,7 +118,7 @@ public class PropertiesController {
                     });
 
                     deleteTranslationButton.setOnAction(event -> {
-                        System.out.println("========== Delete Translation Button clicked");
+                        System.out.println("========== Delete Property Button clicked");
                         Property property = properties.get(this.getIndex());
                         System.out.println("Delete Property");
                         currentWord = wordService.deleteProperty(currentWord, property);

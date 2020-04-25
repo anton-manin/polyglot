@@ -40,10 +40,7 @@ public class ExamplesController {
 
     DetailsController detailsController;
 
-    @FXML
-    public void initialize() {
-
-
+    public void init() {
         exampleTableView.setEditable(true);
 
         exampleTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Example, String>, ObservableValue<String>>()

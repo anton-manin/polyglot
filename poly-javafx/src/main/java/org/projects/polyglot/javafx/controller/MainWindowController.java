@@ -118,6 +118,10 @@ public class MainWindowController {
                 words.clear();
             }
         });
+
+        wordsDetailsController.init();
+        wordsPropertiesController.init();
+        wordsExamplesController.init();
     }
 
     @FXML

@@ -92,11 +92,13 @@ public class DetailsController {
     private Tab examplesTab;
     private Tab propertiesTab;
 
-    @FXML
-    public void initialize() {
-
+    public void init() {
         translationTableView.setDisable(true);
+
         deleteButton.setVisible(false);
+        saveButton.setVisible(false);
+        cancelButton.setVisible(false);
+        addButton.setVisible(true);
 
         // Load languages in languageChoiceBox
         languages.setAll(languageService.getAllLanguages());
