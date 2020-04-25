@@ -16,7 +16,6 @@ import org.projects.polyglot.core.domain.WordType;
 import org.projects.polyglot.core.errorhandling.UniqueWordException;
 import org.projects.polyglot.core.repository.WordRepository;
 import org.projects.polyglot.core.service.LanguageService;
-import org.projects.polyglot.core.service.PriorityService;
 import org.projects.polyglot.core.service.WordService;
 import org.projects.polyglot.core.service.WordTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,9 +48,6 @@ public class DetailsController {
     private ChoiceBox<String> wordTypeChoiceBox;
 
     @FXML
-    private ChoiceBox<Integer> priorityChoiceBox;
-
-    @FXML
     private Button saveButton;
 
     @FXML
@@ -68,9 +64,6 @@ public class DetailsController {
 
     @Autowired
     WordTypeService wordTypeService;
-
-    @Autowired
-    PriorityService priorityService;
 
     private final ObservableList<String> languages = FXCollections.observableArrayList();
 
@@ -106,9 +99,6 @@ public class DetailsController {
 
         wordTypes.setAll(wordTypeService.getAllWordTypes());
         wordTypeChoiceBox.setItems(wordTypes);
-
-        priorities.setAll(priorityService.getListOfPriorities());
-        priorityChoiceBox.setItems(priorities);
 
         initializeWordsTableView();
     }
@@ -206,12 +196,10 @@ public class DetailsController {
         try {
             if (wordTextField.getText() != null &&
                     wordTypeChoiceBox.getValue() != null &&
-                    languageChoiceBox.getValue() != null &&
-                    priorityChoiceBox.getValue() != null) {
+                    languageChoiceBox.getValue() != null) {
                 currentWord.setWord(wordTextField.getText());
                 currentWord.setWordType(WordType.valueOf(wordTypeChoiceBox.getValue()));
                 currentWord.setLanguage(Languages.valueOf(languageChoiceBox.getValue()));
-                currentWord.setPriority(priorityChoiceBox.getValue());
             } else throw new RuntimeException("Provide all the needed information to word");
 
             if (this.currentWord.getId() == null) {
@@ -254,7 +242,6 @@ public class DetailsController {
         wordTextField.setText("");
         wordTypeChoiceBox.setValue(null);
         languageChoiceBox.setValue(null);
-        priorityChoiceBox.setValue(null);
 
         resetCurrentWord();
         deleteButton.setVisible(false);
@@ -327,7 +314,6 @@ public class DetailsController {
         wordTextField.setText(currentWord.getWord() != null ? currentWord.getWord() : "");
         wordTypeChoiceBox.setValue(currentWord.getWordType() != null ? currentWord.getWordType().toString() : null);
         languageChoiceBox.setValue(currentWord.getLanguage() != null ? currentWord.getLanguage().toString() : null);
-        priorityChoiceBox.setValue(currentWord.getPriority());
 
         translations.clear();
         translations.addAll(emptyIfNull(word.getTranslations()));
