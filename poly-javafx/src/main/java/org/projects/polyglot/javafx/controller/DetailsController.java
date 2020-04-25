@@ -1,7 +1,6 @@
 package org.projects.polyglot.javafx.controller;
 
 import javafx.beans.property.ReadOnlyStringWrapper;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -17,10 +16,13 @@ import org.projects.polyglot.core.domain.WordType;
 import org.projects.polyglot.core.errorhandling.UniqueWordException;
 import org.projects.polyglot.core.repository.WordRepository;
 import org.projects.polyglot.core.service.LanguageService;
+import org.projects.polyglot.core.service.PriorityService;
 import org.projects.polyglot.core.service.WordService;
 import org.projects.polyglot.core.service.WordTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import static org.projects.polyglot.core.util.Util.emptyIfNull;
 
 @Component
 public class DetailsController {
@@ -46,33 +48,50 @@ public class DetailsController {
     @FXML
     private ChoiceBox<String> wordTypeChoiceBox;
 
+    @FXML
+    private ChoiceBox<Integer> priorityChoiceBox;
+
+    @FXML
+    private Button saveButton;
+
+    @FXML
+    private Button deleteButton;
+
     @Autowired
     LanguageService languageService;
-
-    private final ObservableList<String> languages = FXCollections.observableArrayList();
 
     @Autowired
     WordTypeService wordTypeService;
 
+    @Autowired
+    PriorityService priorityService;
+
+    private final ObservableList<String> languages = FXCollections.observableArrayList();
+
     private final ObservableList<String> wordTypes = FXCollections.observableArrayList();
 
     private final ObservableList<Word> translations = FXCollections.observableArrayList();
+
+    private final ObservableList<Integer> priorities = FXCollections.observableArrayList();
 
     @Autowired
     WordService wordService;
 
     Word currentWord;
 
-    SimpleStringProperty wordTextProperty;
-    SimpleStringProperty wordTypeProperty;
-    SimpleStringProperty languageProperty;
-
-    // For test
     @Autowired
     WordRepository wordRepository;
+    private ExamplesController wordsExamplesController;
+    private PropertiesController wordsPropertiesController;
+    private Tab examplesTab;
+    private Tab propertiesTab;
 
     @FXML
     public void initialize() {
+
+        translationTableView.setDisable(true);
+        deleteButton.setVisible(false);
+
         addDummyTestDataToWordsList();
 
         // Load languages in languageChoiceBox
@@ -81,6 +100,9 @@ public class DetailsController {
 
         wordTypes.setAll(wordTypeService.getAllWordTypes());
         wordTypeChoiceBox.setItems(wordTypes);
+
+        priorities.setAll(priorityService.getListOfPriorities());
+        priorityChoiceBox.setItems(priorities);
 
         initializeWordsTableView();
     }
@@ -94,6 +116,10 @@ public class DetailsController {
         {
             Word selectedTranslation = ((Word) t.getTableView().getItems().get(t.getTablePosition().getRow()));
             selectedTranslation.setLanguage(Languages.valueOf(t.getNewValue()));
+
+            if (selectedTranslation.getId() != null) {
+                wordService.update(selectedTranslation);
+            }
 
             t.getTableView().refresh();
         });
@@ -112,11 +138,16 @@ public class DetailsController {
             Word selectedTranslation = ((Word) t.getTableView().getItems().get(t.getTablePosition().getRow()));
             selectedTranslation.setWord(t.getNewValue());
 
+            if (selectedTranslation.getId() != null) {
+                wordService.update(selectedTranslation);
+            }
+
             t.getTableView().refresh();
         });
 
         actionTableColumn.setCellFactory(param -> new TableCell<String,String>() {
-            final Button btn = new Button("Delete");
+            final Button deleteTranslationButton = new Button("Delete");
+            final Button saveTranslationButton = new Button("Save");
 
             @Override
             public void updateItem(String item, boolean empty) {
@@ -125,10 +156,34 @@ public class DetailsController {
                     setGraphic(null);
                     setText(null);
                 } else {
-                    btn.setOnAction(event -> {
-                        System.out.println("========== Button clicked");
+                    saveTranslationButton.setOnAction(event -> {
+                        System.out.println("========== Save Translation Button clicked");
+                        Word translation = translations.get(this.getIndex());
+
+                        if (translation != null &&
+                        translation.getLanguage() != null && !translation.getWord().equals("Enter word")) {
+                            translation.setWordType(currentWord.getWordType());
+                            wordService.addTranslation(currentWord, translation);
+
+                            translations.add(getEmptyWord());
+                        }
                     });
-                    setGraphic(btn);
+
+                    deleteTranslationButton.setOnAction(event -> {
+                        System.out.println("========== Delete Translation Button clicked");
+                        Word translation = translations.get(this.getIndex());
+                        wordService.deleteTranslation(currentWord, translation);
+                        translations.remove(translation);
+                    });
+
+                    System.out.println(this.getIndex() + " == " + translations.size());
+                    if (this.getIndex() == translations.size() - 1) {
+                        System.out.println("Equal");
+                        setGraphic(saveTranslationButton);
+                    } else {
+                        setGraphic(deleteTranslationButton);
+                    }
+
                     setText(null);
                 }
             }
@@ -143,7 +198,32 @@ public class DetailsController {
     @FXML
     public void saveButtonOnAction() {
         try {
-            wordService.save(currentWord);
+            if (wordTextField.getText() != null &&
+                    wordTypeChoiceBox.getValue() != null &&
+                    languageChoiceBox.getValue() != null &&
+                    priorityChoiceBox.getValue() != null) {
+                currentWord.setWord(wordTextField.getText());
+                currentWord.setWordType(WordType.valueOf(wordTypeChoiceBox.getValue()));
+                currentWord.setLanguage(Languages.valueOf(languageChoiceBox.getValue()));
+                currentWord.setPriority(priorityChoiceBox.getValue());
+            } else throw new RuntimeException("Provide all the needed information to word");
+
+            if (this.currentWord.getId() == null) {
+                wordService.save(currentWord);
+            } else {
+                this.currentWord = wordService.update(currentWord);
+            }
+
+            this.wordsExamplesController.setCurrentWord(this.currentWord);
+            this.wordsPropertiesController.setCurrentWord(this.currentWord);
+
+            examplesTab.setDisable(false);
+            propertiesTab.setDisable(false);
+
+            translationTableView.setDisable(false);
+
+            deleteButton.setVisible(true);
+
             System.out.println("===== SAVED");
         } catch (UniqueWordException e) {
             Alert alert = new Alert(Alert.AlertType.WARNING, "The word you trying to save already exists!", ButtonType.OK);
@@ -159,7 +239,26 @@ public class DetailsController {
     @FXML
     public void deleteButtonOnAction() {
         wordService.delete(currentWord);
+
+        translations.clear();
+        translationTableView.setDisable(true);
+
+        wordTextField.setText("");
+        wordTypeChoiceBox.setValue(null);
+        languageChoiceBox.setValue(null);
+        priorityChoiceBox.setValue(null);
+
+        resetCurrentWord();
+        deleteButton.setVisible(false);
+
+        examplesTab.setDisable(true);
+        propertiesTab.setDisable(true);
+
         System.out.println("===== DELETED");
+    }
+
+    private void resetCurrentWord() {
+        currentWord = new Word();
     }
 
     private void addDummyTestDataToWordsList() {
@@ -174,24 +273,68 @@ public class DetailsController {
         translation.setWord("machen");
         translation.setLanguage(Languages.GERMAN);
 
-        //currentWord.setTranslations(Arrays.asList(translation));
+        Word translation2 = new Word();
+        translation2.setWord("tun");
+        translation2.setLanguage(Languages.GERMAN);
 
-        wordTextProperty = new SimpleStringProperty(currentWord.getWord());
-        wordTextProperty.addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) ->
-                currentWord.setWord(newValue));
-        wordTextField.textProperty().bindBidirectional(wordTextProperty);
+        wordTextField.setText(currentWord.getWord());
+        wordTypeChoiceBox.setValue(currentWord.getWordType().toString());
+        languageChoiceBox.setValue(currentWord.getLanguage().toString());
 
-        wordTypeProperty = new SimpleStringProperty(currentWord.getWordType().toString());
-        wordTypeProperty.addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) ->
-                currentWord.setWordType(WordType.valueOf(newValue)));
-        wordTypeChoiceBox.valueProperty().bindBidirectional(wordTypeProperty);
-
-        languageProperty = new SimpleStringProperty(currentWord.getLanguage().toString());
-        languageProperty.addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) ->
-            currentWord.setLanguage(Languages.valueOf(newValue)));
-        languageChoiceBox.valueProperty().bindBidirectional(languageProperty);
-
-        translations.add(translation);
+        translations.add(getEmptyWord());
     }
 
+    private Word getEmptyWord() {
+        Word emptyTranslation = new Word();
+        emptyTranslation.setWord("Enter word");
+
+        return emptyTranslation;
+    }
+
+    public void loadWord(Word word) {
+        System.out.println("LOADED WORD!");
+        this.currentWord = word;
+
+        wordTextField.setText(currentWord.getWord() != null ? currentWord.getWord() : "");
+        wordTypeChoiceBox.setValue(currentWord.getWordType() != null ? currentWord.getWordType().toString() : null);
+        languageChoiceBox.setValue(currentWord.getLanguage() != null ? currentWord.getLanguage().toString() : null);
+        priorityChoiceBox.setValue(currentWord.getPriority());
+
+        translations.clear();
+        translations.addAll(emptyIfNull(word.getTranslations()));
+        translations.add(getEmptyWord());
+
+        this.wordsExamplesController.setCurrentWord(this.currentWord);
+        this.wordsPropertiesController.setCurrentWord(this.currentWord);
+
+        if (word.getId() == null) {
+            deleteButton.setVisible(false);
+            this.translationTableView.setDisable(true);
+            this.examplesTab.setDisable(true);
+            this.propertiesTab.setDisable(true);
+        } else {
+            deleteButton.setVisible(true);
+            this.translationTableView.setDisable(false);
+            this.examplesTab.setDisable(false);
+            this.propertiesTab.setDisable(false);
+        }
+    }
+
+    public void setExamplesController(ExamplesController wordsExamplesController) {
+        this.wordsExamplesController = wordsExamplesController;
+        this.wordsExamplesController.setDetailsController(this);
+    }
+
+    public void setExamplesTab(Tab examplesTab) {
+        this.examplesTab = examplesTab;
+    }
+
+    public void setPropertiesController(PropertiesController wordsPropertiesController) {
+        this.wordsPropertiesController = wordsPropertiesController;
+        this.wordsPropertiesController.setDetailsController(this);
+    }
+
+    public void setPropertiesTab(Tab propertiesTab) {
+        this.propertiesTab = propertiesTab;
+    }
 }

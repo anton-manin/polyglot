@@ -1,8 +1,11 @@
 package org.projects.polyglot.core.domain;
 
 import lombok.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -10,7 +13,6 @@ import java.util.Objects;
 @Getter
 @Setter
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "words")
 public class Word {
@@ -33,19 +35,28 @@ public class Word {
     @Column(nullable = false)
     private WordType wordType;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "TRANSLATIONS",
         joinColumns = @JoinColumn(name = "TRANSLATION_ID", referencedColumnName = "ID"),
         inverseJoinColumns = @JoinColumn(name = "WORD_ID", referencedColumnName = "ID")
     )
+    @Fetch(FetchMode.SUBSELECT)
     private List<Word> translations;
 
-    @OneToMany(mappedBy = "word", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "word", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval=true)
+    @Fetch(FetchMode.SUBSELECT)
     private List<Example> examples;
 
-    @OneToMany(mappedBy = "word", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "word", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval=true)
+    @Fetch(FetchMode.SUBSELECT)
     private List<Property> properties;
+
+    public Word() {
+        this.translations = new ArrayList<>();
+        this.examples = new ArrayList<>();
+        this.properties = new ArrayList<>();
+    }
 
     @Override
     public boolean equals(Object o) {
